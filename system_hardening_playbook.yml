@@ -1,0 +1,96 @@
+---
+- name: System Hardening Playbook
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Gather details from sshd configuration file
+      copy:
+        src: /etc/ssh/sshd_config
+        dest: /tmp/sshd_config
+      register: sshd_config
+
+    - name: Update packages and services (Debian-based)
+      apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_os_family == "Debian"
+
+    - name: Update packages and services (Red Hat-based)
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: List all installed packages (Debian-based)
+      command: dpkg -l
+      register: installed_packages
+      when: ansible_os_family == "Debian"
+
+    - name: List all installed packages (Red Hat-based)
+      command: rpm -qa
+      register: installed_packages
+      when: ansible_os_family == "RedHat"
+
+    - name: Display logging configuration data
+      copy:
+        src: /etc/systemd/journald.conf
+        dest: /tmp/journald.conf
+      register: journald_conf
+
+    - name: Display logrotate configuration data
+      copy:
+        src: /etc/logrotate.conf
+        dest: /tmp/logrotate.conf
+      register: logrotate_conf
+
+    - name: Remove world permissions from files in /home
+      find:
+        paths: /home
+        recurse: yes
+        file_type: file
+        permissions: 'o+rwx'
+      register: world_permissions_files
+
+    - name: Remove world permissions
+      file:
+        path: "{{ item.path }}"
+        mode: u=rw,g=rw,o=
+      loop: "{{ world_permissions_files.files }}"
+
+    - name: Update permissions for Engineering scripts
+      find:
+        paths: /
+        patterns: '*engineering*'
+        recurse: yes
+      register: engineering_scripts
+
+    - name: Set permissions for Engineering scripts
+      file:
+        path: "{{ item.path }}"
+        group: engineering
+        mode: '0770'
+      loop: "{{ engineering_scripts.files }}"
+
+    - name: Update permissions for Finance scripts
+      find:
+        paths: /
+        patterns: '*finance*'
+        recurse: yes
+      register: finance_scripts
+
+    - name: Set permissions for Finance scripts
+      file:
+        path: "{{ item.path }}"
+        group: finance
+        mode: '0770'
+      loop: "{{ finance_scripts.files }}"
+
+    - name: Backup /home/sysadmin directory
+      command: tar -cvzf /tmp/sysadmin_backup_{{ ansible_date_time.date }}.tar.gz /home/sysadmin
+
+  handlers:
+    - name: Restart sshd
+      service:
+        name: sshd
+        state: restarted
