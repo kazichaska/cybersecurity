@@ -7,6 +7,26 @@ linux_sysadmin_fundamentals.md
 
 ## User and Authentication Management
 
+- **Add a new user**
+  ```sh
+  sudo useradd username
+  ```
+
+- **Delete a user**
+  ```sh
+  sudo userdel username
+  ```
+
+- **Change a user's password**
+  ```sh
+  sudo passwd username
+  ```
+
+- **Add a user to a group**
+  ```sh
+  sudo usermod -aG groupname username
+  ```
+
 - **List locked or empty password accounts**
   ```sh
   cat /etc/shadow | awk -F: '($2=="!" || $2=="*" || $2==""){print $1}'
