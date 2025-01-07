@@ -161,5 +161,3 @@ Privilege escalation vulnerabilities like granting sudo access to `less` occur w
 
 5. **Use Alternatives for Restricted Tasks:**
    Consider using role-based access control (RBAC) systems for more granular control.
-
-Let me know if you'd like to test any of these commands in your Docker container or need further explanations!

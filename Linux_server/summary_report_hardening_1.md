@@ -46,5 +46,3 @@
 Overall, the hardening scripts and scheduled tasks have significantly improved the security posture of the system. However, continuous monitoring, regular updates, and periodic audits are essential to maintain and enhance security. Addressing the identified concerns and implementing best practices will further strengthen the system's defenses against potential threats.
 
 ---
-
-Submit this report in BootcampSpot as part of your project submission.

@@ -134,5 +134,3 @@ PowerShell scripts allow combining cmdlets, parameters, conditions, and file imp
    - Combining cmdlets for automation.
 
 ---
-
-By mastering these PowerShell concepts, you can navigate, manage, and automate tasks efficiently in a Windows environment. Let me know if you’d like further details or examples!
