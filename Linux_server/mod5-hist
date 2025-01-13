@@ -1,0 +1,55 @@
+  377  mkdir Projects
+  378  pwd
+  379  ls -la
+  380  ls -la /tmp/
+  381  cp /tmp/TarDocs.tar Projects/
+  382  cd Projects/
+  383  ls -la
+  384  tar -xvf TarDocs.tar
+  385  ls -la
+  386  ls TarDocs/
+  387  ls TarDocs/Documents/
+  388  ls -l TarDocs/Documents/
+  390  tar -cvf Javaless_Docs.tar --exclude='TarDocs/Documents/Java' .
+  391  ls -la
+  393  tar -tvf Javaless_Docs.tar | grep Java
+  394  sudo tar -cvzf logs_backup.tar.gz --listed-incremental=snapshot.file /var/log
+
+  0 6 * * 3 tar -cvzf /auth_backup.tgz /var/log/auth.log
+
+   sudo mkdir -p backups/{freemem,diskuse,openlist,freedisk}
+  401  ls -la
+  402  ls -l backups/
+  403  pwd
+  404  nano system.sh
+  405  cd ~/
+  406  ls -la
+  407  vi system.sh
+  408  cat system.sh
+  409  chmod +x system.sh
+  410  ./system.sh
+  411  sudo ./system.sh
+  412  whoami
+  413  chmod u+x system.sh
+  414  ls -la system.sh
+  415  sudo ./system.sh
+  416  cat system.sh
+  417  ./system.sh
+  418  ls -la system.sh
+  419  ls -la backups
+  420  sudo chown sysadmin:sysadmin -R backups
+  421  ls -la backups
+  422  ./system.sh
+  423  cat backups/freemem/free_mem.txt
+  424  cat backups/freedisk/
+  425  cat backups/diskuse/disk_usage.txt
+  426  cat backups/openlist/open_list.txt
+  427  sudo cp system.sh /etc/cron.weekly/
+
+  401  sudo ausearch -ts today -m USER_AUTH
+  402  sudo ausearch -ts today -m USER_AUTH -ua sysadmin
+  403  sudo useradd attacker
+  404  sudo ausearch -k acct
+  405  sudo nano /etc/audit/rules.d/audit.rules
+  406  sudo systemctl restart auditd
+  407  sudo auditctl -l

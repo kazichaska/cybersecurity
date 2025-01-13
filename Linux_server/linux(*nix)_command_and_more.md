@@ -131,6 +131,10 @@
   ```sh
   find /path/to/search -name "file_name"
   ```
+- **`find`** - multiple directory
+```sh
+find / -type d -iname "Etc" -o -iname "Legal" 
+```
 - **`tar`**: Archives files.
   ```sh
   tar -cvf archive_name.tar directory_name

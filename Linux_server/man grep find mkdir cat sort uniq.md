@@ -37,6 +37,22 @@ Sure, here is the corrected and well-formatted `man grep find mkdir cat sort uni
   grep -i "Sugar" email/* | wc -l > Sugar_Evidence/sugar_email_evidence
   ```
 
+``` sh
+grep -r "guavaberries"
+```
+
+``` sh
+grep -ri "guavaberries\|optional" *
+```
+
+``` sh
+grep -rE "guavaberries|optional" *
+```
+
+``` sh
+egrep -r "guavaberries|optional" *
+```
+
 - **Display the contents of the evidence file**
   ```sh
   cat Sugar_Evidence/sugar_email_evidence
