@@ -161,3 +161,119 @@ Privilege escalation vulnerabilities like granting sudo access to `less` occur w
 
 5. **Use Alternatives for Restricted Tasks:**
    Consider using role-based access control (RBAC) systems for more granular control.
+
+
+
+
+To properly mitigate privilege escalation vulnerabilities caused by **misconfigured sudo access**, follow these best practices:
+
+---
+
+### **1️⃣ Avoid Granting Unrestricted Sudo Access**
+Instead of granting full sudo access (`ALL=(ALL) NOPASSWD:`), use **granular restrictions**. For example, if a user needs to edit configuration files, specify **only those files** in `/etc/sudoers`:
+
+```bash
+user ALL=(ALL) NOPASSWD: /usr/bin/vim /etc/specific_config.conf
+```
+
+This prevents users from using `vim` to execute shell commands.
+
+---
+
+### **2️⃣ Use "sudo -e" Instead of Direct Editor Access**
+Instead of allowing `vim` or `nano` via sudo, use the **"sudoedit"** feature, which prevents users from spawning an interactive shell:
+
+```bash
+sudo -e /etc/specific_config.conf
+```
+
+To enforce this, explicitly restrict access to `vim` but allow `sudoedit`:
+
+```bash
+user ALL=(ALL) NOPASSWD: sudoedit /etc/specific_config.conf
+```
+
+This prevents shell escapes while still allowing file editing.
+
+---
+
+### **3️⃣ Remove Unnecessary Sudo Access**
+Run:
+
+```bash
+sudo visudo
+```
+
+Find and **remove any lines** granting unrestricted sudo access to **vim, nano, less, more**, etc.
+
+---
+
+### **4️⃣ Restrict Interactive Programs That Can Escalate Privileges**
+Any program that allows executing commands should **never** be given sudo access. Avoid configurations like:
+
+```bash
+user ALL=(ALL) NOPASSWD: /usr/bin/vim
+user ALL=(ALL) NOPASSWD: /usr/bin/nano
+user ALL=(ALL) NOPASSWD: /usr/bin/less
+```
+
+To find risky sudo configurations:
+
+```bash
+sudo -l
+```
+
+If you see unrestricted access to any command, **remove it immediately**.
+
+---
+
+### **5️⃣ Use "NOEXEC" to Prevent Shell Escapes**
+If you **must** allow a user to run an editor, use `NOEXEC` in `/etc/sudoers`:
+
+```bash
+Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Defaults!vim     noexec
+```
+
+This prevents `vim` from executing external commands.
+
+---
+
+### **6️⃣ Monitor Sudo Logs for Abuse**
+Enable logging in `/etc/sudoers`:
+
+```bash
+Defaults logfile="/var/log/sudo.log"
+```
+
+Then, monitor logs:
+
+```bash
+tail -f /var/log/sudo.log
+```
+
+---
+
+### **7️⃣ Consider Using RBAC Instead of Sudo**
+Instead of granting sudo permissions, use **Role-Based Access Control (RBAC)** tools like:
+
+- **polkit** for fine-grained privilege management.
+- **AppArmor or SELinux** for mandatory access controls.
+
+---
+
+### **Final Check**
+To ensure no unauthorized sudo access exists:
+
+```bash
+sudo -l
+grep 'NOPASSWD' /etc/sudoers /etc/sudoers.d/*
+```
+
+If anything suspicious appears, **fix it immediately**.
+
+---
+
+### **Conclusion**
+🔴 **Never allow unrestricted sudo access to editors or interactive programs**.  
+🟢 Use **sudoedit**, `NOEXEC`, and **granular restrictions** to minimize privilege escalation risks.

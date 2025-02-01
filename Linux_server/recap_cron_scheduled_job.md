@@ -41,6 +41,32 @@ Scripts can handle routine tasks, like system updates, cleanup, and monitoring.
    ```
    - Use case: Runs a security scan with Lynis.
 
+   **Scan from group**
+   ```
+   sudo lynis audit system --test-from-group malware --test-from-group authentication --test-from-group networking --test-from-group storage --test-from-group filesystems
+   ```
+
+**Partial audit**
+
+```
+sysadmin@ip-10-0-1-227:~/Security_scripts$ cat lynis.*
+#!/bin/bash
+
+# Debugging info
+echo "Running Lynis partial audit..."
+echo "Command: lynis audit system --tests-from-group malware,authentication,networking,storage,filesystems --quiet"
+
+# Execute the scan
+sudo sudo lynis audit system --test-from-group malware --test-from-group authentication --test-from-group networking --test-from-group storage --test-from-group filesystems > /tmp/lynis.partial_scan.log 2>&1
+```
+**Full audit**
+```
+#!/bin/bash
+
+# Run a full system Lynis scan and save results
+sudo lynis audit system --quiet > /tmp/lynis.system_scan.log
+```
+
 3. **Cleanup Script (`cleanup.sh`)**:
    ```bash
    #!/bin/bash

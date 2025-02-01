@@ -161,8 +161,3 @@ sudo apt-get install aircrack-ng
 
 ### Summary
 Aircrack-ng is a powerful tool that helps you test the security of Wi-Fi networks. By following these steps, you can see if your Wi-Fi password is strong enough to keep others from guessing it. Remember, always use this tool responsibly and only on networks you have permission to test.
-
----
-
-This document provides a detailed explanation of how to use Aircrack-ng, written in a way that a 5th grader can understand. Use these steps to practice and learn how to test Wi-Fi network security.
-```

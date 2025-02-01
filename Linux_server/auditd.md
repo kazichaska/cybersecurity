@@ -56,6 +56,7 @@ Here's how to add audit rules for `/etc/shadow`, `/etc/passwd`, and `/var/log/au
     *   `/etc/shadow`: Stores hashed user passwords. Monitoring changes to this file is crucial for detecting potential password compromises.
     *   `/etc/passwd`: Stores basic user account information. Changes to this file can indicate unauthorized user creation or modification.
     *   `/var/log/auth.log`: Logs authentication attempts, both successful and failed. Monitoring this log can help detect brute-force attacks and other authentication-related issues.
+    
 *   **Permissions to Monitor (`wra`):** Monitoring `wra` (write, attribute change, read) for `/etc/shadow` is essential. For `/etc/passwd` and `/var/log/auth.log`, `wa` (write and attribute change) is usually sufficient, as reading these files is often a legitimate system operation. However, including `r` (read) can provide more detailed information in some cases.
 *   **Keynames:** Using descriptive keynames makes it much easier to search the audit logs for specific events.
 *   **Audit Log Location:** Audit logs are typically stored in `/var/log/audit/audit.log`.

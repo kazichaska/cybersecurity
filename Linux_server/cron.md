@@ -123,6 +123,12 @@ To redirect the output of a cron job to a log file, use:
 0 3 * * * /path/to/script.sh >> /path/to/logfile.log 2>&1
 ```
 
+### Cron jobs path and to see for other users cron
+```
+sudo cat /var/spool/cron/crontabs/root
+sudo cat /var/spool/cron/crontabs/jane
+```
+
 ### Environment Variables
 
 You can set environment variables in the crontab file:

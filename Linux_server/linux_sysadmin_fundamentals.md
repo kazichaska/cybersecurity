@@ -31,7 +31,10 @@ linux_sysadmin_fundamentals.md
   ```sh
   cat /etc/shadow | awk -F: '($2=="!" || $2=="*" || $2==""){print $1}'
   ```
-
+  ```
+  awk -F: '$2 == "*" || $2 == "!" {print $1}' /etc/passwd
+  awk -F: '$3 == 0 && $1 != "root"' /etc/passwd
+  ```
 ## Service Management
 
 - **Stop vsftpd service**
